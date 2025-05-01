@@ -1,0 +1,30 @@
+{
+  "name": "ai-writer",
+  "version": "1.0.0",
+  "description": "AI-powered writing assistant using Ollama",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@monaco-editor/react": "^4.6.0",
+    "axios": "^1.6.2",
+    "react-markdown": "^9.0.1",
+    "react-router-dom": "^6.20.0",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.20",
+    "@mui/icons-material": "^5.14.20"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.0",
+    "vite": "^5.0.0",
+    "typescript": "^5.2.2",
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15"
+  }
+} 
