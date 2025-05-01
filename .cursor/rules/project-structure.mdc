@@ -1,0 +1,34 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Project Structure Guide
+
+This repository contains three main projects, each with its own specific structure and requirements.
+
+## Project Organization
+
+Each project follows this structure:
+- `client/`: Frontend Next.js application
+- `server/`: Backend Express server
+- `docs/`: Project documentation
+- `tests/`: Test files
+
+### AI Writer Project
+The main entry point is [01-ai-writer/client/pages/index.js](mdc:01-ai-writer/client/pages/index.js)
+Key components:
+- [01-ai-writer/client/components/Editor.js](mdc:01-ai-writer/client/components/Editor.js): Monaco-based text editor
+- [01-ai-writer/server/api/generate.js](mdc:01-ai-writer/server/api/generate.js): Text generation endpoint
+
+### Content Summarizer Project
+The main entry point is [02-content-summarizer/client/pages/index.js](mdc:02-content-summarizer/client/pages/index.js)
+Key components:
+- [02-content-summarizer/client/components/URLInput.js](mdc:02-content-summarizer/client/components/URLInput.js): URL processing
+- [02-content-summarizer/server/api/summarize.js](mdc:02-content-summarizer/server/api/summarize.js): Content summarization endpoint
+
+### Code Explainer Project
+The main entry point is [03-code-explainer/client/pages/index.js](mdc:03-code-explainer/client/pages/index.js)
+Key components:
+- [03-code-explainer/client/components/CodeEditor.js](mdc:03-code-explainer/client/components/CodeEditor.js): Code input interface
+- [03-code-explainer/server/api/analyze.js](mdc:03-code-explainer/server/api/analyze.js): Code analysis endpoint

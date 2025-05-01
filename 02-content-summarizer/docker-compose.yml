@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "${BACKEND_PORT}:${BACKEND_PORT}"
+    env_file:
+      - ./.env
+    environment:
+      - NODE_ENV=${BACKEND_NODE_ENV}
+      - PORT=${BACKEND_PORT}
+      - OLLAMA_API_URL=${BACKEND_OLLAMA_API_URL}
+      - DEFAULT_MODEL=${BACKEND_DEFAULT_MODEL}
+      - MAX_TOKENS=${BACKEND_MAX_TOKENS}
+      - TEMPERATURE=${BACKEND_TEMPERATURE}
+      - CORS_ORIGIN=${BACKEND_CORS_ORIGIN}
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
+    env_file:
+      - ./.env
+    environment:
+      - NODE_ENV=${FRONTEND_NODE_ENV}
+      - VITE_API_URL=${FRONTEND_API_URL}
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend 

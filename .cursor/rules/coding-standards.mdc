@@ -1,0 +1,67 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Coding Standards
+
+## General Guidelines
+- Use TypeScript for type safety
+- Follow functional programming principles
+- Implement responsive design with Tailwind CSS
+- Use ESLint and Prettier for code formatting
+
+## Frontend Standards
+- Use Next.js App Router and React Server Components where possible
+- Implement proper error boundaries and loading states
+- Follow atomic design principles for components
+- Use CSS modules or Tailwind for styling
+
+## Backend Standards
+- Use Express.js with TypeScript
+- Implement proper error handling and logging
+- Use environment variables for configuration
+- Follow RESTful API design principles
+
+## Code Style
+```typescript
+// Component example
+interface Props {
+  title: string;
+  onAction: () => void;
+}
+
+export function Component({ title, onAction }: Props) {
+  return (
+    <div className="p-4">
+      <h1>{title}</h1>
+      <button onClick={onAction}>
+        Click me
+      </button>
+    </div>
+  );
+}
+```
+
+## API Response Format
+```typescript
+interface ApiResponse<T> {
+  success: boolean;
+  data?: T;
+  error?: {
+    message: string;
+    code: string;
+  };
+}
+```
+
+## File Naming
+- React components: PascalCase (e.g., `UserProfile.tsx`)
+- Utilities: camelCase (e.g., `formatDate.ts`)
+- Constants: UPPER_SNAKE_CASE
+- CSS modules: camelCase.module.css
+
+## Testing
+- Write unit tests for utilities and components
+- Use integration tests for API endpoints
+- Implement E2E tests for critical user flows

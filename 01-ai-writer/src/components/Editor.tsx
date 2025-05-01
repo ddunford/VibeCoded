@@ -1,99 +1,57 @@
+/**
+ * A Monaco-based text editor component for content generation
+ * @component
+ */
+
 import React, { useState } from 'react';
-import Editor from '@monaco-editor/react';
-import { Box, Paper, Button, Select, MenuItem, FormControl, InputLabel, Typography } from '@mui/material';
-import axios from 'axios';
+import Chat from './Chat';
+import { ErrorBoundary } from '../utils/ErrorBoundary';
 
-const roles = [
-  { value: 'cto', label: 'CTO' },
-  { value: 'marketing', label: 'Marketing Professional' },
-  { value: 'technical', label: 'Technical Writer' },
-  { value: 'custom', label: 'Custom' }
-];
+interface EditorProps {
+  /** Initial content for the editor */
+  initialContent?: string;
+  /** Callback when content changes */
+  onContentChange?: (content: string) => void;
+  /** Whether the editor is in read-only mode */
+  isReadOnly?: boolean;
+}
 
-const WritingEditor: React.FC = () => {
-  const [content, setContent] = useState('');
-  const [selectedRole, setSelectedRole] = useState('cto');
-  const [isGenerating, setIsGenerating] = useState(false);
+export function Editor({ 
+  initialContent = '', 
+  onContentChange,
+  isReadOnly = false 
+}: EditorProps) {
+  const [content, setContent] = useState(initialContent);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleEditorChange = (value: string | undefined) => {
-    if (value !== undefined) {
-      setContent(value);
-    }
-  };
-
-  const generateContent = async () => {
-    setIsGenerating(true);
-    try {
-      const response = await axios.post('/api/generate', {
-        prompt: content,
-        role: selectedRole,
-        model: 'llama3'
-      }, {
-        responseType: 'stream'
-      });
-
-      // Handle streaming response
-      const reader = response.data.getReader();
-      let result = '';
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        
-        const chunk = new TextDecoder().decode(value);
-        result += chunk;
-        setContent(result);
-      }
-    } catch (error) {
-      console.error('Error generating content:', error);
-    } finally {
-      setIsGenerating(false);
-    }
+  const handleContentUpdate = (newContent: string) => {
+    setContent(newContent);
+    onContentChange?.(newContent);
   };
 
   return (
-    <Box sx={{ p: 3, height: 'calc(100vh - 64px)' }}>
-      <Paper sx={{ p: 2, mb: 2 }}>
-        <FormControl fullWidth sx={{ mb: 2 }}>
-          <InputLabel>Writing Role</InputLabel>
-          <Select
-            value={selectedRole}
-            label="Writing Role"
-            onChange={(e) => setSelectedRole(e.target.value)}
-          >
-            {roles.map((role) => (
-              <MenuItem key={role.value} value={role.value}>
-                {role.label}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <Button
-          variant="contained"
-          onClick={generateContent}
-          disabled={isGenerating}
-          fullWidth
-        >
-          {isGenerating ? 'Generating...' : 'Generate Content'}
-        </Button>
-      </Paper>
-      
-      <Paper sx={{ height: 'calc(100% - 120px)' }}>
-        <Editor
-          height="100%"
-          defaultLanguage="markdown"
-          value={content}
-          onChange={handleEditorChange}
-          theme="vs-dark"
-          options={{
-            minimap: { enabled: false },
-            fontSize: 14,
-            wordWrap: 'on'
-          }}
-        />
-      </Paper>
-    </Box>
+    <ErrorBoundary fallback={<div className="text-red-500">Error loading editor</div>}>
+      <div className="flex flex-col h-[calc(100vh-64px)] gap-4 p-4">
+        {/* Chat Panel */}
+        <div className="w-full">
+          <Chat onContentUpdate={handleContentUpdate} />
+        </div>
+        
+        {/* Content Display */}
+        <div className="flex-1 overflow-auto bg-gray-800 rounded-lg">
+          {isLoading ? (
+            <div className="flex items-center justify-center h-full">
+              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
+            </div>
+          ) : (
+            <pre className="whitespace-pre-wrap break-words font-mono text-sm leading-6 text-white p-4 m-0">
+              {content || 'Generated content will appear here...'}
+            </pre>
+          )}
+        </div>
+      </div>
+    </ErrorBoundary>
   );
-};
+}
 
-export default WritingEditor; 
+export default Editor; 

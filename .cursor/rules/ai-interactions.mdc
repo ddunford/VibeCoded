@@ -1,0 +1,59 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# AI Interaction Guidelines
+
+## Project Context
+You are working on a collection of AI-powered tools:
+1. AI Writer: Text generation with style customization
+2. Content Summarizer: URL and PDF content analysis
+3. Code Explainer: Code analysis and documentation
+
+## Code Generation Guidelines
+
+### Frontend Components
+- Generate responsive React components using Tailwind CSS
+- Include proper TypeScript types and interfaces
+- Implement error boundaries and loading states
+- Add JSDoc comments for component props
+
+### Backend Endpoints
+- Follow RESTful API design patterns
+- Include input validation and error handling
+- Add Swagger/OpenAPI documentation
+- Implement proper logging
+
+### AI Integration
+- Use streaming responses for real-time feedback
+- Implement proper error handling for AI failures
+- Add retry mechanisms for API calls
+- Cache responses when appropriate
+
+## Documentation Requirements
+- Include clear component descriptions
+- Document all props and return types
+- Add usage examples
+- Specify any dependencies or requirements
+
+## Example Component Structure
+```typescript
+/**
+ * A component that displays and processes user input
+ * @param {string} initialValue - The initial input value
+ * @param {(value: string) => void} onChange - Callback when input changes
+ * @param {boolean} isProcessing - Whether the input is being processed
+ */
+interface InputProps {
+  initialValue: string;
+  onChange: (value: string) => void;
+  isProcessing?: boolean;
+}
+```
+
+## Testing Requirements
+- Generate unit tests for utilities
+- Include integration tests for API endpoints
+- Add snapshot tests for components
+- Test error handling and edge cases
